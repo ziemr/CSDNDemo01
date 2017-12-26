@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/com/android/gastove/TabAdapter.java=UTF-8
+encoding//src/com/android/gastove/adapter/CalendarAdapter.java=UTF-8
+encoding//src/com/android/gastove/calendar/LunarCalendar.java=UTF-8
+encoding//src/com/android/gastove/provider/DBOperator.java=UTF-8
+encoding//src/com/android/gastove/provider/DBprovider.java=UTF-8
+encoding//src/com/android/gastove/ui/CalendarFrgmt.java=UTF-8
+encoding//src/com/android/gastove/util/DragGridView.java=UTF-8
+encoding//src/com/android/gastove/util/Encode.java=UTF-8

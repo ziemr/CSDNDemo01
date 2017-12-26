@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f0f0f0"
+    android:orientation="vertical" >
+      <include layout="@layout/main_head" />
+    <ScrollView
+        android:id="@+id/id_more_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="7.0dip"
+            android:layout_marginRight="7.0dip"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/background_corners"
+            android:orientation="vertical" >
+           <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            <RelativeLayout
+                 android:id="@+id/more_screen_lock"
+                 android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip"
+                android:clickable="true"
+                android:background="@drawable/selector_relativelayout_bg" >
+
+                <ImageView
+                    android:id="@+id/image_history"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/more_jd_app_recommend" />
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_screen_lock"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_history"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+                <ToggleButton
+                    android:id="@+id/togbut_islock"
+                    style="@style/ToggleButtonStyle"
+                    android:layout_width="44dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/selector_toggle"
+                    android:textOn=""
+                    android:textOff="" />
+            </RelativeLayout>
+            
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            <RelativeLayout
+                 android:id="@+id/more_callstatus"
+                 android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip"
+                android:clickable="true"
+                android:background="@drawable/selector_relativelayout_bg" >
+
+                <ImageView
+                    android:id="@+id/image_history"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/more_jd_app_recommend" />
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_calls"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_history"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+                <ToggleButton
+                    android:id="@+id/togbut_iscallstatus"
+                    style="@style/ToggleButtonStyle"
+                    android:layout_width="44dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/selector_toggle"
+                    android:textOn=""
+                    android:textOff="" />
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:id="@+id/more_contact_send"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip"
+                android:clickable="true"
+                android:background="@drawable/selector_relativelayout_bg" >
+
+                 <ImageView
+                    android:id="@+id/image_history"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_history" />
+                <TextView 
+                    android:id="@+id/txt_more_contact_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_contact_send"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_history"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+             <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            <RelativeLayout
+                android:id="@+id/more_restore"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip"
+                android:clickable="true"
+                android:background="@drawable/selector_relativelayout_bg" >
+
+                 <ImageView
+                    android:id="@+id/image_history"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_history" />
+                <TextView 
+                    android:id="@+id/txt_more_restore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_restore"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_history"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            <RelativeLayout
+                android:id="@+id/more_contacts"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip" 
+                android:clickable="true"
+                android:background="@drawable/selector_relativelayout_bg" >
+
+                <ImageView
+                    android:id="@+id/image_seting"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_setup" />
+                <TextView 
+                    android:id="@+id/txt_more_contacts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_contact"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_seting"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            
+            <RelativeLayout
+                android:id="@+id/more_help"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip" 
+                android:clickable="true"
+                android:background="@drawable/selector_relativelayout_bg" >"
+
+                <ImageView
+                    android:id="@+id/image_help"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_help" />
+                <TextView 
+                    android:id="@+id/txt_more_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_help"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_help"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            
+            <RelativeLayout
+                android:id="@+id/more_databack"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingTop="14.0dip" 
+                android:clickable="true"
+                android:background="@drawable/selector_relativelayout_bg" >
+
+                <ImageView
+                    android:id="@+id/image_opinion"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_feedback" />
+                <TextView 
+                    android:id="@+id/txt_more_databack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/head_databack"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_opinion"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            
+            <RelativeLayout
+                android:id="@+id/more_deldb"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip" 
+                android:clickable="true"
+                android:background="@drawable/selector_relativelayout_bg" >
+
+                <ImageView
+                    android:id="@+id/image_aboutus"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_about" />
+                <TextView 
+                    android:id="@+id/txt_more_deldb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_deldb"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_aboutus"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            
+            <RelativeLayout
+                android:id="@+id/more_update"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip" 
+                android:clickable="true"
+                android:background="@drawable/selector_relativelayout_bg" >>
+
+                <ImageView
+                    android:id="@+id/image_update"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_check_version" />
+                <TextView 
+                    android:id="@+id/txt_more_update"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_update"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_update"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+            
+            <RelativeLayout
+                android:id="@+id/more_exit"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip" 
+                android:clickable="true"
+                android:background="@drawable/selector_relativelayout_bg" >>
+
+                <ImageView
+                    
+                    android:id="@+id/image_exit"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_exit" />
+                <TextView 
+                    android:id="@+id/txt_more_exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_exit"
+                    android:textSize="16.0dip"
+                    android:layout_toRightOf="@id/image_exit"
+                    android:paddingLeft="15dip"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <View android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

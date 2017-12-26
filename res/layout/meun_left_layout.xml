@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/left_menu_bg" >
+
+    <LinearLayout
+        android:id="@+id/setting_above_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/one"
+                android:layout_width="@dimen/leftmeun_icon_size"
+                android:layout_height="@dimen/leftmeun_icon_size"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/img_3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/one"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="IN"
+                android:textColor="@drawable/left_menu_textcolor"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/two"
+                android:layout_width="@dimen/leftmeun_icon_size"
+                android:layout_height="@dimen/leftmeun_icon_size"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/img_5" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/two"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="OUT"
+                android:textColor="#f0f0f0"
+                android:textSize="20sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/three"
+                android:layout_width="@dimen/leftmeun_icon_size"
+                android:layout_height="@dimen/leftmeun_icon_size"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/img_4" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/three"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="Ac"
+                android:textColor="#f0f0f0"
+                android:textSize="20sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/setting_bottom_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/menuleft_moresetting"
+                android:layout_width="28.0dip"
+                android:layout_height="28.0dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/main_menu_setup" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/menuleft_moresetting"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="@string/more_settings"
+                android:textColor="@drawable/left_menu_textcolor"
+                android:textSize="14sp"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- conter -->
+
+    <ScrollView
+        android:id="@+id/menuleft_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/setting_bottom_layout"
+        android:layout_below="@id/setting_above_layout"
+        android:layout_marginTop="20dp" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="7.0dip"
+            android:layout_marginRight="7.0dip"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@drawable/left_menu_textcolor" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:minHeight="50.0dip"
+                android:paddingBottom="14.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:paddingTop="14.0dip"
+                android:background="@drawable/selector_leftmenu_bg" >
+
+                <ImageView
+                    android:id="@+id/image_history"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_history" />
+
+                <TextView
+                    style="@style/LEFTMENU_TEXT_STYLE"
+                    android:layout_toRightOf="@id/image_history"
+                    android:text="@string/left_visibility" />
+
+                <ToggleButton
+                    android:id="@+id/togbut_isShowing"
+                    style="@style/ToggleButtonStyle"
+                    android:layout_width="44dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/selector_toggle"
+                    android:textOn=""
+                    android:textOff="" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc" />
+
+            <RelativeLayout
+                android:id="@+id/more_seting"
+                style="@style/LEFTMENU_VIEWGROUP_STYLE" >
+
+                <ImageView
+                    android:id="@+id/image_seting"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_setup" />
+
+                <TextView
+                    style="@style/LEFTMENU_TEXT_STYLE"
+                    android:layout_toRightOf="@id/image_seting"
+                    android:text="@string/more_seting" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/android_list_idex" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc" />
+
+            <RelativeLayout
+                android:id="@+id/more_help"
+                style="@style/LEFTMENU_VIEWGROUP_STYLE" >
+
+                <ImageView
+                    android:id="@+id/image_help"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_help" />
+
+                <TextView
+                    style="@style/LEFTMENU_TEXT_STYLE"
+                    android:layout_toRightOf="@id/image_help"
+                    android:text="@string/more_contactgroup" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/android_list_idex" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc" />
+
+            <RelativeLayout
+                android:id="@+id/more_pupheigh"
+                style="@style/LEFTMENU_VIEWGROUP_STYLE" >
+
+                <ImageView
+                    android:id="@+id/image_aboutus"
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/main_menu_about" />
+
+                <TextView
+                    style="@style/LEFTMENU_TEXT_STYLE"
+                    android:layout_toRightOf="@id/image_aboutus"
+                    android:text="@string/left_popheh" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/android_list_idex" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/radioGroup_relatvelayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50.0dip"
+                android:paddingLeft="14.0dip"
+                android:paddingRight="12.0dip"
+                android:visibility="gone" >
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_pupheight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radioGroup_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:textColor="@drawable/left_menu_textcolor"
+                        android:textSize="14dp"
+                        android:text="十二" />
+  <View 
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dip"
+        android:layout_marginBottom="5dip"
+        android:layout_toLeftOf="@id/radioGroup_12"
+        android:layout_marginLeft="10dip"
+        android:background="@drawable/divider_vertical_dark"
+    />
+                    <RadioButton
+                        android:id="@+id/radioGroup_15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@drawable/left_menu_textcolor"
+                        android:text="十五" />
+  <View 
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dip"
+        android:layout_marginBottom="5dip"
+        android:layout_toLeftOf="@id/radioGroup_15"
+        android:layout_marginLeft="10dip"
+        android:background="@drawable/divider_vertical_dark"
+    />
+                    <RadioButton
+                        android:id="@+id/radioGroup_18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@drawable/left_menu_textcolor"
+                        android:text="十八" />
+                </RadioGroup>
+            </RelativeLayout>
+             <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="#ffcccccc" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

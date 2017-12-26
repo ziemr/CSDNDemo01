@@ -1,0 +1,89 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+     <style name="MyTheme" parent="AppBaseTheme">
+        <item name="vpiTabPageIndicatorStyle">@style/MyWidget.TabPageIndicator</item>
+        <item name="android:windowBackground">@drawable/init_pic</item>
+        <item name="android:windowNoTitle">true</item>  
+        <item name="android:animationDuration">5000</item>
+        <item name="android:windowContentOverlay">@null</item>  
+    </style>
+    
+    <style name="MyWidget.TabPageIndicator" parent="Widget">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/vpi__tab_indicator</item>
+        <item name="android:paddingLeft">22dip</item>
+        <item name="android:paddingRight">22dip</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textAppearance">@style/MyTextAppearance.TabPageIndicator</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="MyTextAppearance.TabPageIndicator" parent="Widget">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+<!-- pup windows -->
+    <style name="DIALOG_STYLE" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/popupwindows_enter</item>
+        <item name="@android:windowExitAnimation">@anim/popupwindows_exit</item>
+    </style>
+    <!-- left_menu_text -->
+       <style name="LEFTMENU_TEXT_STYLE" parent="android:Animation">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16.0dip</item>
+        <item name="android:paddingLeft">15dip</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@drawable/left_menu_textcolor</item>
+    </style>
+    <style name="LEFTMENU_VIEWGROUP_STYLE" parent="android:Animation">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:minHeight">50.0dip</item>
+        <item name="android:paddingBottom">14.0dip</item>
+        <item name="android:paddingLeft">14.0dip</item>
+        <item name="android:paddingRight">12.0dip</item>
+        <item name="android:paddingTop">14.0dip</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/selector_leftmenu_bg</item>
+    </style>
+    <style name="ToggleButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+    <style name="PersonalMainLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:background">@drawable/background_corners</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">1dp</item>
+    </style>
+    <style name="PersonalLine">
+        <item name="android:background">#ffcccccc</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1.0dip</item>
+    </style>
+</resources>

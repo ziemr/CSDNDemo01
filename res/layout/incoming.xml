@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <ImageButton
+        android:id="@+id/INCOMINGFINDVIEW_NORL"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/eco_setting_hint_button" />
+    
+        <ImageButton
+        android:id="@+id/INCOMINGFINDVIEW_DRAG"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/eco_setting_hint_button"
+        android:visibility="gone" />
+</LinearLayout>
