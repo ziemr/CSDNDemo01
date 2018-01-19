@@ -1,7 +1,21 @@
 package com.android.gastove.service;
 
+import java.net.SocketException;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.android.gastove.net.WIFIMsg;
+import com.android.gastove.net.WifiService;
+import com.android.gastove.udpmanager.ConnectionManager;
+import com.android.gastove.udpmanager.Info;
+import com.android.gastove.udpmanager.ServersSocket;
+import com.android.gastove.udpmanager.ServersSocket.ClientDataCallBack;
+import com.android.gastove.udpmanager.UDPSocketBroadCast;
+import com.android.gastove.ui.LoginFrgmtActivity;
+import com.android.gastove.util.Const;
+import com.android.gastove.util.SharedPrefsData;
+import com.android.gastove.util.TelListener;
+import com.android.gastove.util.Utils;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -15,17 +29,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.widget.Toast;
-
-import com.android.gastove.net.WIFIMsg;
-import com.android.gastove.net.WifiService;
-import com.android.gastove.ui.LoginFrgmtActivity;
-import com.android.gastove.util.Const;
-import com.android.gastove.util.InitAppData;
-import com.android.gastove.util.SharedPrefsData;
-import com.android.gastove.util.TelListener;
-import com.android.gastove.util.Utils;
 
 public class GastoveService extends Service {
 
@@ -40,7 +44,9 @@ public class GastoveService extends Service {
     private ISMNotification mISMNotification = null;
     
     private String DeviceMac = null;
-    
+	private UDPSocketBroadCast mBroadCast;
+	private ServersSocket mServersSocket;
+	
     // Name of the connected device
     private String mConnectedDeviceName = null;
     private Timer timer;
@@ -82,7 +88,34 @@ public class GastoveService extends Service {
 		return Context;
 		
 	}
-	
+	/**
+	 * 客户端数据在这里处理
+	 */
+	private ClientDataCallBack clientData = new ClientDataCallBack() {
+
+		@Override
+		public void getClientData(int connectMode, String str) {
+			switch (connectMode) {
+			case Info.CONNECT_SUCCESS:// 连接成功
+				sendCast(Info.CONNECT_SUCCESS, str);
+				break;
+			case Info.CONNECT_GETDATA:// 传输数据
+				sendCast(Info.CONNECT_SUCCESS, str);
+				break;
+			case Info.CONNECT_FAIL:
+				sendCast(Info.CONNECT_FAIL, str);
+				break;
+			}
+		}
+
+		private void sendCast(int flag, String str) {
+			Intent intent = new Intent();
+			intent.putExtra("flag", flag);
+			intent.putExtra("str", str);
+			intent.setAction("updata");
+			sendBroadcast(intent);
+		}
+	};
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -109,8 +142,32 @@ public class GastoveService extends Service {
         //ism`s function
 		TelephonyManager telM = (TelephonyManager)Context.getSystemService(Context.TELEPHONY_SERVICE);
 		telM.listen(new TelListener(Context), PhoneStateListener.LISTEN_CALL_STATE);
+		//for udp
+		try {
+			String ip = ConnectionManager.getLocalIP();
+			if (ip != null && !"".equals(ip)) {
+				Info.SERVERSOCKET_IP = ip;
+				mBroadCast = UDPSocketBroadCast.getInstance();
+				mServersSocket = ServersSocket.getInstance();
+//				mBroadCast.startUDP(Info.SERVERSOCKET_IP,
+//						Info.SERVERSOCKET_PORT);
+//				mServersSocket.startServer(clientData);
+			} else {
+				Toast.makeText(getApplicationContext(), "请检查网络设置",
+						Toast.LENGTH_LONG).show();
+//				stopSelf();
+			}
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
+	public void sendUDP(){
+		mBroadCast.startUDP(Info.SERVERSOCKET_IP,
+				Info.SERVERSOCKET_PORT);
+		mServersSocket.startServer(clientData);
+	}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		PritLog.d(TAG+"onStartCommand");
@@ -138,9 +195,12 @@ public class GastoveService extends Service {
 //				StartTimer();
 			} else {
 //				StopTimer();
-			}
-			
-		} 
+			}	
+		}
+		if ("com.android.test.action".equals(action)) {
+//			sendUDP();
+		}
+		
     }
     
     private class EcomodeThead extends Thread{

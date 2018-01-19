@@ -1,20 +1,28 @@
 package com.android.gastove.ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
 import com.android.gastove.R;
 import com.android.gastove.adapter.PupWidowsAdapter;
 import com.android.gastove.provider.DBOperator;
+import com.android.gastove.provider.DBServerOperator;
 import com.android.gastove.settings.PoPupWidowsDataLeaf;
 import com.android.gastove.util.BodyLine;
 import com.android.gastove.util.Const;
 import com.android.gastove.util.GroupingListAdapter;
 import com.android.gastove.util.PopupWidows;
+import com.android.gastove.util.STools;
 import com.android.gastove.util.Utils;
 import com.android.gastove.warehouse.WarHosDataTree;
 
@@ -22,23 +30,30 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.AsyncQueryHandler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.database.sqlite.SQLiteDiskIOException;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteFullException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -70,8 +85,9 @@ import android.widget.Toast;
  * @author Administrator
  *
  */
-public class DtRecordInFrgmtActivity extends FragmentActivity{
-    private static final String TAG = "RecordListActivity";
+public class DtRecordInFrgmtActivity extends STools{
+
+	private static final String TAG = "RecordListActivity";
 	RecentCallsAdapter mAdapter;
     private QueryHandler mQueryHandler;
     private DBOperator mDbOperator;
@@ -190,7 +206,9 @@ public class DtRecordInFrgmtActivity extends FragmentActivity{
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dt_frgmtaty_recordin_layout);
+		View rootView = View.inflate(this, R.layout.dt_frgmtaty_recordin_layout, null);
+		setContentView(rootView);
+		init(rootView);
 		init();
 
 		mLayoutHide = (LinearLayout)findViewById(R.id.head_hide);
@@ -386,7 +404,7 @@ public class DtRecordInFrgmtActivity extends FragmentActivity{
 		et_dialog_mmstxt.setText(message);
 		alertDialog.setTitle(getResources().getString(R.string.mms));
 		alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-		alertDialog.setPositiveButton(android.R.string.ok,
+		alertDialog.setPositiveButton(R.string.mms,
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -400,6 +418,14 @@ public class DtRecordInFrgmtActivity extends FragmentActivity{
 					    startActivity(sendIntent);
 					}
 				});
+		alertDialog.setNeutralButton(R.string.weixin,  new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String mms = et_dialog_mmstxt.getText().toString().trim();
+				shareWeChatFriend("11",mms,1,Utils.textAsBitmap(mms, 20));				
+			}
+		});
 		alertDialog.setNegativeButton(android.R.string.cancel, null);
 		AlertDialog tempDialog = alertDialog.create();
 		tempDialog.setView(alertDialogView, 0, 0, 0, 0);
@@ -1097,6 +1123,12 @@ private OnClickListener mHotkeyListener = new OnClickListener() {
 				sortflag = true;
 			}
 		};
+		private static final int REQUEST_CODE = 1;  
+	    private String strImgPath = "";//照片保存路径  
+	    private File imageFile = null;//照片文件  
+	    /** 定义相片的最大尺寸 **/  
+	    private final int IMAGE_MAX_WIDTH = 540;  
+	    private final int IMAGE_MAX_HEIGHT = 960;  
 	private OnClickListener mNewRecordListener = new OnClickListener() {
 
 		@Override
@@ -1110,13 +1142,14 @@ private OnClickListener mHotkeyListener = new OnClickListener() {
 			// 设置列表显示，注意设置了列表显示就不要设置builder.setMessage()了，否则列表不起作用。
 
 			final String items[] = { getString(R.string.add_record),
-					getString(R.string.mms), getString(R.string.open) };
+					getString(R.string.share), getString(R.string.open),getString(R.string.open) };
 			builder.setItems(items, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					SUM_HEAD.setText("");
 //					NUM_HEAD.setText("");
 					// dialog.dismiss();
+					String mms = null;
 					switch (which) {
 					case 0:
 						createNewRecord();
@@ -1124,7 +1157,7 @@ private OnClickListener mHotkeyListener = new OnClickListener() {
 						NUM_HEAD.setText("");
 						break;
 					case 1:
-						String mms =  mDbOperator.queryRecordINToMms(Bundle_recordid);
+						mms =  mDbOperator.queryRecordINToMms(Bundle_recordid);
 		            	MMSDialog(mms);
 		            	Toast.makeText(mContext, getString(R.string.dialog_mms_hint), Toast.LENGTH_SHORT)
 						.show();
@@ -1134,8 +1167,11 @@ private OnClickListener mHotkeyListener = new OnClickListener() {
 						Bundle_Gesture = true;
 						popupHandler.sendEmptyMessageDelayed(0, 100);
 						break;
-					case 3: // EDIT ALL
-
+					case 3: // camera
+//						cameraRemark();
+						mms =  mDbOperator.queryRecordINToMms(Bundle_recordid);
+						
+						shareWeChatFriend("11",mms,1,Utils.textAsBitmap(mms, 20));
 						break;
 					default:
 						break;
@@ -1146,6 +1182,220 @@ private OnClickListener mHotkeyListener = new OnClickListener() {
 			builder.create().show();
 		}
 	};
+	/**
+     * 分享到微信好友
+     *
+     * @param msgTitle
+     *            (分享标题)
+     * @param msgText
+     *            (分享内容)
+     * @param type
+     *            (分享类型)
+     * @param drawable
+     *            (分享图片，若分享类型为AndroidShare.TEXT，则可以为null)
+     */
+    public void shareWeChatFriend(String msgTitle, String msgText, int type,
+                                  Bitmap drawable) {
+
+        shareMsg("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI", "微信",
+                msgTitle, msgText, type, drawable);
+    }
+    /**
+     * 点击分享的代码
+     *
+     * @param packageName
+     *            (包名,跳转的应用的包名)
+     * @param activityName
+     *            (类名,跳转的页面名称)
+     * @param appname
+     *            (应用名,跳转到的应用名称)
+     * @param msgTitle
+     *            (标题)
+     * @param msgText
+     *            (内容)
+     * @param type
+     *            (发送类型：text or pic 微信朋友圈只支持pic)
+     */
+    private void shareMsg(String packageName, String activityName,
+                          String appname, String msgTitle, String msgText, int type,
+                          Bitmap drawable) {
+        if (!packageName.isEmpty() && !isAvilible(mContext, packageName)) {// 判断APP是否存在
+            Toast.makeText(mContext, "请先安装" + appname, Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+
+        Intent intent = new Intent("android.intent.action.SEND");
+        if (type == 0) {
+            intent.setType("text/plain");
+        } else if (type == 1) {
+            intent.setType("image/*");
+            final Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(
+            		mContext.getContentResolver(), drawable, null, null));
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+        }
+
+        intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
+        intent.putExtra(Intent.EXTRA_TEXT, msgText);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (!packageName.isEmpty()) {
+            intent.setComponent(new ComponentName(packageName, activityName));
+            mContext.startActivity(intent);
+        } else {
+        	mContext.startActivity(Intent.createChooser(intent, msgTitle));
+        }
+    }
+    /**
+     * 判断相对应的APP是否存在
+     *
+     * @param context
+     * @param packageName
+     * @return
+     */
+    public boolean isAvilible(Context context, String packageName) {
+        PackageManager packageManager = context.getPackageManager();
+
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        for (int i = 0; i < pinfo.size(); i++) {
+            if (((PackageInfo) pinfo.get(i)).packageName
+                    .equalsIgnoreCase(packageName))
+                return true;
+        }
+        return false;
+    }
+	private void cameraRemark() {
+		Intent getPhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);  
+//        strImgPath = Environment.getExternalStorageDirectory()  
+//                .toString() + "/CSDN_PIC/";  
+//        String fileName = Utils.systemDate() + ".jpg";// 照片以格式化日期方式命名  
+//        File out = new File(strImgPath);  
+//        if (!out.exists()) {  
+//            out.mkdirs();  
+//        }  
+//        out = new File(strImgPath, fileName);  
+//        strImgPath = strImgPath + fileName;// 该照片的绝对路径  
+//        Uri uri = Uri.fromFile(out);  
+//        getPhoto.putExtra(MediaStore.EXTRA_OUTPUT, uri);//根据uri保存照片  
+//        getPhoto.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);//保存照片的质量  
+        startActivityForResult(getPhoto, REQUEST_CODE);//启动相机拍照
+	}
+	 /** 保存相机的图片 **/
+    private void saveCameraImage(Intent data) {
+        // 检查sd card是否存在
+        if (!Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            Log.i(TAG, "sd card is not avaiable/writeable right now.");
+            return;
+        }
+        // 为图片命名啊
+        String fileName = new DateFormat().format("yyyymmss",
+                Calendar.getInstance(Locale.CHINA))+ ".jpg";
+        Bitmap bitmap = (Bitmap) data.getExtras().get("data");// 解析返回的图片成bitmap
+
+        strImgPath = Environment.getExternalStorageDirectory()  
+                .toString() + "/CSDN_PIC/";
+        File out = new File(strImgPath);  
+        if (!out.exists()) {  
+            out.mkdirs();  
+        } 
+        // 保存文件
+        FileOutputStream fos = null;
+        strImgPath = strImgPath + fileName;// 该照片的绝对路径
+        try {// 写入SD card
+            fos = new FileOutputStream(strImgPath);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            bitmap.recycle();
+            bitmap = null;
+            System.gc();
+        }// 显示图片
+//        ((ImageView) findViewById(R.id.show_image)).setImageBitmap(bmp);
+    }
+    private void zipImage(String savePath,Bitmap bmp) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(savePath, options);
+        options.inSampleSize = computeInitialSampleSize(options, 480, 480 * 960);
+        options.inJustDecodeBounds = false;
+        Bitmap bitmap = BitmapFactory.decodeFile(savePath, options);
+        try {
+            FileOutputStream fos = new FileOutputStream(savePath);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bitmap.recycle();
+        bitmap = null;
+        System.gc();
+    }
+
+	private int computeInitialSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels) {
+		double w = options.outWidth;
+		double h = options.outHeight;
+		int lowerBound = (maxNumOfPixels == -1) ? 1 : (int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
+		int upperBound = (minSideLength == -1) ? 128
+				: (int) Math.min(Math.floor(w / minSideLength), Math.floor(h / minSideLength));
+		if (upperBound < lowerBound) {
+			// return the larger one when there is no overlapping zone.
+			return lowerBound;
+		}
+		if ((maxNumOfPixels == -1) && (minSideLength == -1)) {
+			return 1;
+		} else if (minSideLength == -1) {
+			return lowerBound;
+		} else {
+			return upperBound;
+		}
+	}
+	 /** 
+     * 返回照片结果处理 
+     */  
+    @Override  
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
+        super.onActivityResult(requestCode, resultCode, data);  
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+        	saveCameraImage(data);
+        	
+            imageFile = new File(strImgPath);  
+            int scale = 0;  
+                scale = getZoomScale(imageFile);//得到缩放倍数  
+                Log.i(TAG, "scale = "+scale);  
+                BitmapFactory.Options options = new BitmapFactory.Options();  
+                options.inSampleSize = scale;  
+//              photoImageView.setImageBitmap(BitmapFactory.decodeFile(strImgPath,options));//按指定options显示图片防止OOM  
+            }else {  
+//                Toast.makeText(MainActivity.this, R.string.failed, Toast.LENGTH_LONG).show();  
+            }
+        
+        }  
+  
+    /** 
+     * 图片缩放处理 
+     * @param imageFile 照片文件 
+     * @return 缩放的倍数 
+     */  
+    private int getZoomScale(File imageFile) {  
+        int scale = 1;  
+        BitmapFactory.Options options = new BitmapFactory.Options();  
+        options.inJustDecodeBounds = true;  
+        BitmapFactory.decodeFile(strImgPath, options);  
+        while (options.outWidth / scale >= IMAGE_MAX_WIDTH  
+                || options.outHeight / scale >= IMAGE_MAX_HEIGHT) {  
+            scale *= 2;  
+        }  
+        return scale;  
+    }  
 		private void REAddRecord() {
 			if (Bundle_readd) {
 				mDbOperator.insertRecordToday(Bundle_recordid, Bundle_telnumber,Dialog_dateBulu);  //zhang  dan suo yin
@@ -1240,6 +1490,8 @@ private OnClickListener mHotkeyListener = new OnClickListener() {
 				mBodyLine.setDate(times);// set timed
 				
 				mDbOperator.insertRecordin(mBodyLine);
+				
+				new  DBServerOperator(mContext).insertRecordin(mBodyLine); 
 				mBodyLine.clear();
 				
 				//update Today`flag(data2) to show
@@ -1331,4 +1583,9 @@ private OnClickListener mHotkeyListener = new OnClickListener() {
 	    		return false;
 	    	}
 	    }
+
+		@Override
+		public void button1Click() {
+			cameraRemark();
+		}
 }

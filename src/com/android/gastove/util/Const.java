@@ -94,6 +94,8 @@ public class Const {
 	public static final String COLOUM_TYPEID = "typeID";
 	public static final String AUTHORITY = "com.provider.gastoveDBprovider";  //==
 	
+	public static final String AUTHORITY_SERVER = "com.provider.serverDBprovider"; 
+	
 	public static final long SLEEPTIEM = 200l;
 	public static final String BUNDLE_DRAG = "dragorclick";
 	public static final String KEY_DELIMITER = ",";

@@ -432,9 +432,12 @@
     <string name="ui_rct_oldyestoday" >"前天"</string>
     <string name="head_contact" msgid="8107518433381283736">"联系人"</string>
     <string name="add_contact" msgid="2896685845822146494">"添加联系人"</string>
-    <string name="add_record">"新建账单"</string>  
+    <string name="add_record">"新建账单"</string>
+    <string name="share">"分享至"</string>
     <string name="mms">"短信"</string>
+    <string name="weixin">"微信"</string>
     <string name="open" >"编辑"</string>
+    <string name="camera_remark" >"拍照备注"</string>
     <string name="readd_record">"新建/补录账单"</string>
     <string name="menu_contactgroup">"联系人分组"</string>
     <string name="readd_record_time">"调整补录日期"</string>

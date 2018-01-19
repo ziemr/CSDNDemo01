@@ -1,25 +1,18 @@
 package com.android.gastove.ui;
 
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 
 import com.android.gastove.R;
 import com.android.gastove.calls.RecentCallsListActivity;
 import com.android.gastove.net.IPinputFrgmtActivity;
 import com.android.gastove.net.WIFIMsg;
-import com.android.gastove.net.WifiService;
-import com.android.gastove.net.recordHandleRunnable;
-import com.android.gastove.net.structureRunnable;
 import com.android.gastove.provider.DBOperator;
-import com.android.gastove.test.HttpURLConActivity;
-import com.android.gastove.test.netActivity;
 import com.android.gastove.util.Const;
 import com.android.gastove.util.SharedPrefsData;
 import com.android.gastove.util.Utils;
 import com.android.gastove.warehouse.IndexWHRecordFrgmtActivity;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,7 +41,7 @@ public class MenuLeftFragment extends Fragment implements OnClickListener
 	private ImageView one,two,three,moresettings;
 	private Context mContext;
 	private RadioGroup radioGroup;
-	private RelativeLayout more_pupheight,radioGroup_relatvelayout,morehelp;
+	private RelativeLayout more_pupheight,radioGroup_relatvelayout,morehelp,more_seting;
 	private ToggleButton isShowing;
 	private String TAG = "MenuLeftFragment";
 	
@@ -76,10 +69,12 @@ public class MenuLeftFragment extends Fragment implements OnClickListener
         three = (ImageView) mView.findViewById(R.id.three);
         moresettings = (ImageView)mView.findViewById(R.id.menuleft_moresetting);
         morehelp = (RelativeLayout) mView.findViewById(R.id.more_help);
+        more_seting= (RelativeLayout) mView.findViewById(R.id.more_seting);
         more_pupheight= (RelativeLayout) mView.findViewById(R.id.more_pupheigh);
         more_pupheight.setOnClickListener(this);
         moresettings.setOnClickListener(this);
         morehelp.setOnClickListener(this);
+        more_seting.setOnClickListener(this);
         radioGroup_relatvelayout = (RelativeLayout) mView.findViewById(R.id.radioGroup_relatvelayout); 
         isShowing =(ToggleButton)mView.findViewById(R.id.togbut_isShowing);
         
@@ -246,6 +241,10 @@ public class MenuLeftFragment extends Fragment implements OnClickListener
 			intent.setClass(mContext, ContactGroupActivity.class);
 //			intentR.putExtra(Const.BUNDLE_RECORD_ID, recordid);
 			startActivity(intent);
+			break;
+		case R.id.more_seting:
+			intent.setAction("com.android.test.action");
+			getActivity().sendBroadcast(intent);
 			break;
 		case R.id.more_pupheigh:
 			if (radioGroup_relatvelayout.getVisibility() == View.GONE) {

@@ -871,7 +871,8 @@ if (groupLeader)
 			count = c.getCount();
 		} catch (Exception e) {
 		}
-		c.close();
+		if(c != null ) 
+		   c.close();
 		return count;
 	}
 	
@@ -888,7 +889,7 @@ if (groupLeader)
 			count = c.getCount();
 		} catch (Exception e) {
 		}
-		c.close();
+		if(c!=null) c.close();
 		return count;
 	}
 	public String[] getRecordToday_ID(String today) {
@@ -1407,7 +1408,7 @@ if (groupLeader)
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (c == null || c.getCount() == 0) {
+		if (c != null || c.getCount() == 0) {
 			c.close();
 			return true;
 		} 
@@ -1798,8 +1799,8 @@ if (groupLeader)
 			int num = c.getInt(5);
 			
 			
-			String tmpStr = String.valueOf(i + 1) + ". " + product + type
-					+ fire + remark + String.valueOf(num) + "台";
+			String tmpStr = String.valueOf(i + 1) + ". " + product+" "+ type
+					+ fire + remark +" "+ String.valueOf(num) + "台";
 
 			str += tmpStr;
 			c.moveToNext();

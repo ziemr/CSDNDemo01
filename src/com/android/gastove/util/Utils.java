@@ -4,25 +4,21 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.animation.Animator.AnimatorListener;
-import android.app.Activity;
-import android.app.AlertDialog;
+import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.text.Layout.Alignment;
+import android.text.StaticLayout;
+import android.text.TextPaint;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.gastove.R;
-import com.android.gastove.ui.MoreActivity;
 
 
 public class Utils {
@@ -229,5 +225,28 @@ public class Utils {
             }
 
         }
+    }
+    
+    public static Bitmap textAsBitmap(String text, float textSize) {  
+    	  
+        TextPaint textPaint = new TextPaint();  
+  
+        // textPaint.setARGB(0x31, 0x31, 0x31, 0);  
+        textPaint.setColor(Color.BLACK);  
+  
+        textPaint.setTextSize(textSize);  
+  
+        StaticLayout layout = new StaticLayout(text, textPaint, 450,  
+                Alignment.ALIGN_NORMAL, 1.3f, 0.0f, true);  
+        Bitmap bitmap = Bitmap.createBitmap(layout.getWidth() + 20,  
+                layout.getHeight() + 20, Bitmap.Config.ARGB_8888);  
+        Canvas canvas = new Canvas(bitmap);  
+        canvas.translate(10, 10);  
+        canvas.drawColor(Color.WHITE);  
+  
+        layout.draw(canvas);  
+        Log.d("textAsBitmap",  
+                String.format("1:%d %d", layout.getWidth(), layout.getHeight()));  
+        return bitmap;  
     }
 }

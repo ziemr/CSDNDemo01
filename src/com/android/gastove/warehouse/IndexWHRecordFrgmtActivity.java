@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -228,6 +229,13 @@ public class IndexWHRecordFrgmtActivity extends FragmentActivity implements OnCl
 	        buttonItems.add(button3);
 //	        buttonItems.add(button4);  
 	    }
+
+	@Override
+	public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+		// TODO Auto-generated method stub
+//		parent.
+		return super.onCreateView(parent, name, context, attrs);
+	}
 
 	private void inithead() {
 		OnClickListener mSettingsListener = new OnClickListener() {

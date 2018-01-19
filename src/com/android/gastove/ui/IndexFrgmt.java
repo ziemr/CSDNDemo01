@@ -179,7 +179,6 @@ public class IndexFrgmt extends Fragment {
 			Bundle savedInstanceState) {
 		View mView = inflater.inflate(R.layout.tab_frgmt_rctcalls, container,
 				false);
-		View view = inflater.inflate(R.layout.tab_frgmt_rctcalls, null);
 		mListView = (ListView) mView.findViewById(R.id.callslist);
 		// mListView.setOnCreateContextMenuListener(this);
 		mListView.setAdapter(mAdapter);
